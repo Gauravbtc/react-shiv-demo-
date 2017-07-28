@@ -22,7 +22,7 @@ class App extends Component {
     const numbers = [1,2,3];
     return (
       <div>
-        <Welcome name="gaurav"/>
+        <Welcome name="gaurav shiv"/>
         <User user = {user} />
         <Timer />
         <EventDemo />
