@@ -21,7 +21,7 @@ export default class EventDemo extends Component{
     return(
 			<div>
         <h3>Event Ex </h3>
-        <button onClick={this.handleClick.bind(this)}>
+        <button className ="btn-primary" onClick={this.handleClick.bind(this)}>
           {this.state.isToggleOn ? 'ON' : 'OFF'}
         </button><br/><br/>
         <button onClick={press}>
