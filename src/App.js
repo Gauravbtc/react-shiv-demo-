@@ -5,10 +5,15 @@ import Expression from './expression'
 import Comment from './comment'
 import EventDemo from './eventdemo'
 import ReactDOM from 'react-dom';
+import NameForm from './nameform';
+import Home from './home';
+import Contact from './contact';
+import Calculator from './calculator';
+import './menu.css';
+
+
 
 class App extends Component {
-
-
   render() {
     const user = {
     	firstName: 'Gaurav',
@@ -22,12 +27,22 @@ class App extends Component {
     const numbers = [1,2,3];
     return (
       <div>
+      <ul className="menu" >
+        <li><a class="" href="#"  >Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
         <Welcome name="gaurav shiv"/>
-        <User user = {user} />
+        <User user ={user} />
+        <Home />
+        <Contact />
         <Timer />
         <EventDemo />
         <Comment date={comment.date} text={comment.text} author={comment.author}/>
         <Expression numbers = {numbers} />
+        <NameForm />
+        <Calculator />
       </div>
     );
   }
@@ -84,6 +99,20 @@ const comment = {
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
+
+
+// class Home extends React.Component {
+//    render() {
+//       return (
+//          <div>
+//             <h1>Home...</h1>
+//          </div>
+//       )
+//    }
+// }
+//
+// export default Home;
+
 
 //const element = <Welcome name="Sara" />;
 //const element =
