@@ -9,11 +9,22 @@ import NameForm from './nameform';
 import Home from './home';
 import Contact from './contact';
 import Calculator from './calculator';
+import Books from './books';
+import SignUp from './signup';
+import Routes from './Routes';
+import { withRouter,Link } from 'react-router-dom';
+import { Nav,Navbar} from 'react-bootstrap';
+import RouteNavItem from './components/RouteNavItem';
+import NotFound from './containers/NotFound';
+
 import './menu.css';
 
 
-
 class App extends Component {
+  handleNavLink = (event) => {
+  event.preventDefault();
+  this.props.history.push(event.currentTarget.getAttribute('href'));
+}
   render() {
     const user = {
     	firstName: 'Gaurav',
@@ -26,24 +37,24 @@ class App extends Component {
 
     const numbers = [1,2,3];
     return (
-      <div>
-      <ul className="menu" >
-        <li><a class="" href="#"  >Home</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-        <Welcome name="gaurav shiv"/>
-        <User user ={user} />
-        <Home />
-        <Contact />
-        <Timer />
-        <EventDemo />
-        <Comment date={comment.date} text={comment.text} author={comment.author}/>
-        <Expression numbers = {numbers} />
-        <NameForm />
-        <Calculator />
-      </div>
+      <div className="App container">
+          <Navbar fluid collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">Gaurav</Link>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+              <RouteNavItem onClick={this.handleNavLink} href="/contact">Contact</RouteNavItem>
+              <RouteNavItem onClick={this.handleNavLink} href="/signup">Signup</RouteNavItem>
+              <RouteNavItem onClick={this.handleNavLink} href="/login">Login</RouteNavItem>
+             </Nav>
+           </Navbar.Collapse>
+          </Navbar>
+          <Routes />
+        </div>
     );
   }
 }
@@ -122,4 +133,10 @@ function Welcome(props) {
 //   document.getElementById('root1')
 // );
 
-export default App;
+// handleNavLink = (event) => {
+//   event.preventDefault();
+//   this.props.history.push(event.currentTarget.getAttribute('href'));
+// }
+
+//export default App;
+export default withRouter(App);
