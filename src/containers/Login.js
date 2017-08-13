@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, FormGroup,FormControl, ControlLabel,} from 'react-bootstrap';
+import { FormGroup,FormControl, ControlLabel,} from 'react-bootstrap';
+import LoaderButton from '../components/LoaderButton';
 
 import './Login.css';
 
@@ -8,6 +9,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       username: '',
       password: '',
     };
@@ -29,12 +31,16 @@ class Login extends Component {
     let username = this.state.username;
     let pwd = this.state.password;
     if(username =="admin" && pwd == "admin"){
+      this.setState({ isLoading: true });
       const userToken = "Welcome";
       this.props.updateUserToken(userToken);
       this.props.history.push('/');
+      //console.log(this.props.isLoading);
     }
     else {
-      alert("wrog");
+      alert("wrog username or password");
+      this.setState({username: '',password: '',isLoading: false})
+      this.props.history.push('/Login')
     }
   }
 
@@ -57,13 +63,14 @@ class Login extends Component {
               onChange={this.handleChange.bind(this)}
               type="password" />
           </FormGroup>
-          <Button
+          <LoaderButton
             block
             bsSize="large"
             disabled={ ! this.validateForm() }
-            type="submit">
-            Login
-          </Button>
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="Login"
+            loadingText="Logging in…" />
         </form>
       </div>
     );
