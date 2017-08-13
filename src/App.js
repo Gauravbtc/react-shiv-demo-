@@ -13,7 +13,7 @@ import Books from './books';
 import SignUp from './signup';
 import Routes from './Routes';
 import { withRouter,Link } from 'react-router-dom';
-import { Nav,Navbar} from 'react-bootstrap';
+import { Nav,NavItem,Navbar} from 'react-bootstrap';
 import RouteNavItem from './components/RouteNavItem';
 import NotFound from './containers/NotFound';
 
@@ -21,11 +21,42 @@ import './menu.css';
 
 
 class App extends Component {
-  handleNavLink = (event) => {
+  constructor(props){
+  super(props);
+  this.state = {
+    userToken: null,
+    };
+  }
+
+  // updateUserToken(userToken){
+  //   console.log(userToken);
+  //   this.setState({
+  //   userToken: userToken
+  //   });
+  // }
+
+  updateUserToken = (userToken) => {
+  this.setState({
+    userToken: userToken
+  });
+}
+
+  handleNavLink (event){
   event.preventDefault();
   this.props.history.push(event.currentTarget.getAttribute('href'));
+  }
+
+  handleLogout(event){
+  event.preventDefault();
+  this.updateUserToken(null);
+  this.props.history.push('/login');
+
 }
   render() {
+    const childProps = {
+      userToken: this.state.userToken,
+      updateUserToken: this.updateUserToken,
+    };
     const user = {
     	firstName: 'Gaurav',
     	lastName: 'Makwana',
@@ -47,13 +78,15 @@ class App extends Component {
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav pullRight>
-              <RouteNavItem onClick={this.handleNavLink} href="/contact">Contact</RouteNavItem>
-              <RouteNavItem onClick={this.handleNavLink} href="/signup">Signup</RouteNavItem>
-              <RouteNavItem onClick={this.handleNavLink} href="/login">Login</RouteNavItem>
+              {this.state.userToken ? [<NavItem onClick={this.handleLogout.bind(this)}>Logout</NavItem>,
+                  <RouteNavItem onClick={this.handleNavLink.bind(this)} href="/contact">Contact</RouteNavItem> ]
+              : [ <RouteNavItem key={1} onClick={this.handleNavLink.bind(this)} href="/signup">Signup</RouteNavItem>,
+              <RouteNavItem key={2} onClick={this.handleNavLink.bind(this)} href="/login">Login</RouteNavItem> ] }
+
              </Nav>
            </Navbar.Collapse>
           </Navbar>
-          <Routes />
+          <Routes childProps={childProps}/>
         </div>
     );
   }

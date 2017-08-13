@@ -5,13 +5,14 @@ import NotFound from './containers/NotFound';
 import Login from './containers/Login';
 import Contact from './contact';
 import SignUp from './signup';
+import AppliedRoute from './components/AppliedRoute';
 
-export default () => (
+export default ({ childProps }) => (
   <Switch>
     <Route path="/contact" exact component={Contact}/>
-    <Route path="/" exact component={Home} />
-    <Route path="/login" exact component={Login} />
-    <Route path="/signup" exact component={SignUp} />
+    <Route path="/" exact component={Home}  />
+    <AppliedRoute path="/login" exact component={Login}  props={childProps} />
+    <AppliedRoute path="/signup" exact component={SignUp} props={childProps}  />
     <Route component={NotFound} />
   </Switch>
 );
